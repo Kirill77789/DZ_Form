@@ -15,6 +15,7 @@ function echo_var($name){
 function output_txt($redirect = false){
     $out_1 =[];
     $out_2 =[];
+    $word ='';
     if(empty($_POST['pay'])){
         $_POST['pay'] = 'off';}
         if(!empty($_POST)){
@@ -24,6 +25,23 @@ function output_txt($redirect = false){
                         case 'FIO':
                             $out_1 []= 'Здравствуйте '.$_POST['FIO'].'.';
                             $out_2 []= $_POST['FIO'].'.';
+                            break;
+                        case 'age':
+                            switch($_POST['age']){
+                                case substr($_POST['age'],-2)==(11||12||13||14) :
+                                    $word ='лет';
+                                    break;
+                                case substr($_POST['age'],-1)==1:
+                                    $word ='год';
+                                    break;
+                                case substr($_POST['age'],-1)==(2||3||4):
+                                    $word ='года';
+                                    break;
+                                default:
+                                    $word ='лет';
+                            };
+                            $out_1 []= 'Вам '.$_POST['age'].' '.$word.'.';
+                            $out_2 []= '('.$_POST['age'].' '.$word.').';
                             break;
                         case 'pay':
                             if($_POST['pay'] == 'on'){
@@ -56,6 +74,10 @@ if (empty($_POST)){?>
     <div class="form form_group">
         <label for="" class="form_label">Имя</label>
         <input type="text" name="FIO" class="form_input" value="<?php echo echo_var('FIO'); ?>">
+    </div>
+    <div class="form form_group">
+        <label for="" class="form_label">Возраст</label>
+        <input type="number" name="age" class="form_input" value="<?php echo echo_var('age'); ?>">
     </div>
     <div class="form form_group">
         <label for="" class="form_label">
